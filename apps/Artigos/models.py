@@ -10,7 +10,7 @@ class Article(models.Model):
     status = models.CharField(max_length=30)
     user_submit = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, related_name='user_submit')  # noqa: E501
     proofreader = models.OneToOneField(Professor, on_delete=models.CASCADE, blank=True, null=True, related_name='revisor')       # noqa: E501
-
+    reader_critic = models.CharField(max_length=300)
     class Meta:
         db_table = 'articles'
 

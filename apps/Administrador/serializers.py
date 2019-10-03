@@ -1,3 +1,4 @@
+from ..Events.models import ConcentrationArea, Keyword
 from .models import User, Administrator
 from rest_framework import serializers
 
@@ -22,4 +23,22 @@ class CreateAdministratorSerializer(serializers.ModelSerializer):
         model = Administrator
         fields = '__all__'
 
-    
+
+class ConcentrationAreaSerializer(serializers.ModelSerializer):
+    """"""
+    class Meta:
+        model: ConcentrationArea
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return ConcentrationArea.objects.create(**validated_data)
+
+
+class KeywordSerializer(serializers.ModelSerializer):
+    """"""
+    class Meta:
+        model: Keyword
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Keyword.objects.create(**validated_data)
