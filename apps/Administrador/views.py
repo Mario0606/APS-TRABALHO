@@ -1,26 +1,24 @@
-from django.http import HttpResponse, JsonResponse
-from .forms import EventForm
-from ..Events.models import Events, ConcentrationArea
-from .serializers import ConcentrationAreaSerializer
-
+from django.shortcuts import render
+from rest_framework.response import Response
+from apps.Events.models import Events
+from apps.Professor.models import Professor
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def new_concentration_area(request):
+def appoint_reviewer(request):
     """"""
-    serializer = ConcentrationAreaSerializer(data=request.data)
-    if serializer.is_valid():
-        if ConcentrationArea.objects.filter(area=serializer.data['area']):
-            js = {"Valid": False,
-                    "reason": "Já existe essa area de concentração"}
-            return Response(js)
-        return Response({"Valid": True,
-                         "Text": "Área de concentração criada com sucesso"})
-    return Response(serializer.errors)
-
-
-def new_keyword(request):
-    """"""
-    if form.is_valid():
-        form.save()
-    return HttpResponse(200)
+    reviews = []
+    try:
+        for review in request.data['reviews']:
+            rev = Professor.objects.get(id=review)
+            reviews.append(rev)
+        event = Events.objects.get(event_id=request.data['event_id'])
+        event.reviews.add(*reviews)
+        return Response({"text": "Revisores indicados com sucesso"})
+    except Professor.DoesNotExist:
+        Response({"text": "Professor não existe"})
+    
+    except Events.DoesNotExist:
+        Response({"text": "Evento não existe"})
