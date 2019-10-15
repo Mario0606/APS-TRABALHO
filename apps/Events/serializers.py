@@ -1,8 +1,8 @@
-from .models import Events
+from .models import Events, ConcentrationArea
 from rest_framework import serializers
 
 
-class CreateEventSerializer(serializers.ModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     """"""
     class Meta:
         model = Events

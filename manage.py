@@ -2,10 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from core.monitor_database import start_monitor
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_main.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -18,4 +18,5 @@ def main():
 
 
 if __name__ == '__main__':
+    start_monitor()    
     main()

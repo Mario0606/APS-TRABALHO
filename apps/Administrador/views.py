@@ -1,17 +1,24 @@
-from django.http import HttpResponse, JsonResponse
-from .forms import EventForm
-from ..Events.models import Events
+from django.shortcuts import render
+from rest_framework.response import Response
+from apps.Events.models import Events
+from apps.Professor.models import Professor
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
-
-def events_list(request):
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def appoint_reviewer(request):
     """"""
-    events = Events.objects.all()
-    return JsonResponse(events)
-
-
-def new_event(request):
-    """"""
-    form = EventForm(request.POST, None)
-    if form.is_valid():
-        form.save()
-    return HttpResponse(200)
+    reviews = []
+    try:
+        for review in request.data['reviews']:
+            rev = Professor.objects.get(id=review)
+            reviews.append(rev)
+        event = Events.objects.get(event_id=request.data['event_id'])
+        event.reviews.add(*reviews)
+        return Response({"text": "Revisores indicados com sucesso"})
+    except Professor.DoesNotExist:
+        Response({"text": "Professor não existe"})
+    
+    except Events.DoesNotExist:
+        Response({"text": "Evento não existe"})

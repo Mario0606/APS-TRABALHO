@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
     'corsheaders',
+    'core',
     'apps.Administrador',
     'apps.Professor',
     'apps.Aluno',
@@ -60,7 +62,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-ROOT_URLCONF = 'django_main.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -78,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django_main.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
@@ -138,3 +140,12 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
+
+
+MEDIA_URL = '/articles_files/'
+
+MEDIA_ROOT = 'articles_files'
