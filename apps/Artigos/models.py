@@ -25,3 +25,8 @@ class Article(models.Model):
     class Meta:
         db_table = 'articles'
     
+    def save(self, *args, **kwargs):
+        self.tittle = self.tittle.lower()
+        self.status = self.status.lower()
+        return super(Article, self).save(*args, **kwargs)
+    

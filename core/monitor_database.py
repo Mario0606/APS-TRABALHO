@@ -25,14 +25,12 @@ def events_monitor():
         open_ = """update events set status='open' where %s > start_date and %s < end_date"""
         closed_ = """update events set status='finished' where %s > end_date"""
         will_open = """update events set status='will_open' where %s < start_date"""
-        print('chegou aq')
         with conn:
             with conn.cursor() as curs:
                 curs.execute(open_, (now, now,))
                 curs.execute(closed_, (now,))
                 curs.execute(will_open, (now,))
         sleep(30)
-        print('testing')
 
 
 def start_monitor():

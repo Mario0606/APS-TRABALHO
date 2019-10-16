@@ -16,9 +16,9 @@ def appoint_reviewer(request):
             reviews.append(rev)
         event = Events.objects.get(event_id=request.data['event_id'])
         event.reviews.add(*reviews)
-        return Response({"text": "Revisores indicados com sucesso"})
+        return Response({"valid": True, "text": "Revisores indicados com sucesso"})
     except Professor.DoesNotExist:
-        Response({"text": "Professor não existe"})
+        Response({"valid": False,"text": "Professor não existe"})
     
     except Events.DoesNotExist:
-        Response({"text": "Evento não existe"})
+        Response({"valid": False, "text": "Evento não existe"})

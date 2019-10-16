@@ -14,6 +14,10 @@ class User(models.Model):
 
     class Meta:
         db_table = 'users'
+    
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        return super(User, self).save(*args, **kwargs)
 
 
 class Administrator(User):

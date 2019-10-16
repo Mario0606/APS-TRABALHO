@@ -11,6 +11,9 @@ class ConcentrationArea(models.Model):
     class Meta:
         db_table = 'concentration_areas'
 
+    def save(self, *args, **kwargs):
+        self.concentration_area = self.concentration_area.lower()
+        return super(ConcentrationArea, self).save(*args, **kwargs)
 
 class Keyword(models.Model):
     keyword_id = models.AutoField(primary_key=True)
@@ -21,6 +24,10 @@ class Keyword(models.Model):
 
     class Meta:
         db_table = 'keywords'
+
+    def save(self, *args, **kwargs):
+        self.keyword = self.keyword.lower()
+        return super(Keyword, self).save(*args, **kwargs)
 
 
 class Events(models.Model):
@@ -42,3 +49,10 @@ class Events(models.Model):
 
     class Meta:
         db_table = 'events'
+    
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        self.sigla = self.sigla.lower()
+        self.status = self.status.lower()
+        return super(Events, self).save(*args, **kwargs)
+

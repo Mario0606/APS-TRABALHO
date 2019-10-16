@@ -11,3 +11,4 @@ class Professor(User):
 
     class Meta:
         db_table = 'professors'
+    

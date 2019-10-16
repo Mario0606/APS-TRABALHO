@@ -16,8 +16,8 @@ class KeywordsViewSet(ModelViewSet):
         keyword=request.data.get('keyword', None),
         defaults={'keyword': request.data.get('keyword', None)})
         if created:
-            return Response({'text': "Keyword criada"})
-        return Response({'text': "Keyword já existente"})
+            return Response({"valid": True, 'text': "Keyword criada com sucesso"})
+        return Response({"valid": False, 'text': "Keyword já existente"})
 
 class ConcentrationAreaViewSet(ModelViewSet):
     """"""
@@ -29,8 +29,8 @@ class ConcentrationAreaViewSet(ModelViewSet):
         area=request.data.get('area', None),
         defaults={'area': request.data.get('area', None)})
         if created:
-            return Response({'text': "Area de concentração criada"})
-        return Response({'text': "Area de concentração já existente"})
+            return Response({"valid": True, 'text': "Area de concentração criada com sucesso"})
+        return Response({"valid": False, 'text': "Area de concentração já existente"})
 
     
 class LoginViewSet(ModelViewSet):
@@ -61,13 +61,13 @@ class LoginViewSet(ModelViewSet):
         data = request.data
         auth = User.objects.filter(email=data['address'], password=data['password'])
         res = {
-            "auth": False,
+            "valid": False,
             "reason": "Usuário não existe"
         }
         if auth:
             res = {
                 'type': auth[0].type,
-                'auth': True
+                'valid': True
             }
             return Response(res)
         return Response(res)

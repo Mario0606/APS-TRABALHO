@@ -33,12 +33,12 @@ class ArticleViewSet(ModelViewSet):
                     request.data['reviewer'] = reviewer
                     to_upd.append('reviewer')
                 except User.DoesNotExist:
-                    return Response({'text': 'Professor não existe'})
+                    return Response({"valid": False, 'text': 'Professor não existe'})
             if "status" in request.data:
                 to_upd.append('status')
             update_article = Article(**request.data)
             update_article.save(update_fields=to_upd)
-            return Response({"text": "Artigo atualizado com sucesso"})
+            return Response({"valid": True, "text": "Artigo atualizado com sucesso"})
 
         else:
             return super(ArticleViewSet, self).partial_update(request, *args, **kwargs)
@@ -67,16 +67,16 @@ class CreateArticleViewSet(ModelViewSet):
             request.data['event'] = event
             new_article = Article.objects.create(**request.data)
             new_article.authors.add(*authors)
-            return Response({'text': 'Artigo criado com sucesso'})
+            return Response({'valid': True, 'text': 'Artigo criado com sucesso'})
         
         except User.DoesNotExist:
-            return Response({'text': 'Usuário não existe'})
+            return Response({'valid': False, 'text': 'Usuário não existe'})
 
         except Events.DoesNotExist:
-            return Response({'text': 'Evento não existe'})
+            return Response({'valid': False, 'text': 'Evento não existe'})
 
     def destroy(self, request, *args, **kwargs):
-        return Response('404')
+        return Response(404)
     
     def retrieve(self, request, *args, **kwargs):
         return Response(404)
