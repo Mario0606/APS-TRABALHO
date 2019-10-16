@@ -5,6 +5,7 @@ import { Router, Redirect, Switch, Route} from 'react-router-dom';
 
 import './App.css';
 import NavBar from './components/NavBar.js';
+import Alerts from './components/Alerts.js';
 
 import MainPage from './pages/MainPage.js'
 import NotFoundPage from './pages/NotFoundPage.js'
@@ -13,10 +14,6 @@ import CadastroPage from './pages/CadastroPage.js'
 import ProtectedRoute from './components/ProtectedRoute';
 import UserPage from './pages/UserPage.js';
 
-
-const alertStyle = {
-    display: 'none'
-};
 
 const appHomeStyle = {
   display: 'flex',
@@ -56,31 +53,127 @@ export default class App extends Component {
         this.state= loginState;
     }
 
-    userLoggedChange = (formData) => {
+    userLoggedChange = (formData, logout) => {
         
-        axios.post(`http://localhost:8000/login/auth/`, formData)
-         .then((res)=>{
-             console.log(res)
-            this.setState( { userLogged:res.data.auth, email:res.data.auth?formData.email:null, userType:res.data.auth?res.data.type:null} , ()=>{
-                sessionStorage.setItem('loginState', JSON.stringify(this.state));
-                history.push(this.state.userLogged? '/user=':'/');
-                if(!this.state.userLogged){
-                    let alert=document.getElementById('alert-failure');
-                    alert.style.display='block';
-                }
-            });
-         })
-        // let log = !this.state.userLogged;
+        // axios.post(`http://localhost:8000/login/auth/`, formData)
+        //  .then((res)=>{
+        //      console.log(res)
+        //     this.setState( { userLogged:res.data.auth, email:res.data.auth?formData.email:null, userType:res.data.auth?res.data.type:null} , ()=>{
+        //         sessionStorage.setItem('loginState', JSON.stringify(this.state));
+        //         history.push(this.state.userLogged? '/user=':'/');
+        //         if(!this.state.userLogged){
+        //             let alert=document.getElementById('alert-failure');
+        //             alert.style.display='block';
+        //         }
+        //     });
+        //  })
+        let log = !this.state.userLogged;
         
-        //  this.setState( { userLogged:log, email:log?formData.email:null, userType:log?'adm':null} , ()=>{
-        //     sessionStorage.setItem('loginState', JSON.stringify(this.state));
-        //     console.log(this.state.userType);
-        //     history.push(this.state.userLogged? `/user=`:'/');
+         this.setState( { userLogged:log, email:log?formData.email:null, userType:log?'adm':null} , ()=>{
+            sessionStorage.setItem('loginState', JSON.stringify(this.state));
+
+            history.push(this.state.userLogged? `/user=`:'/');
+            if(!logout && !this.state.userLogged){
+                this.displayAlert('login-failure');
+            }
             
-        // });
+        });
          
     }
 
+
+    displayAlert = (alertType, res) => {
+        let alert;
+        switch (alertType){
+            case 'login-failure':
+                alert = document.getElementById('alert-login-failure');
+                break;
+            case 'cadastro':
+                if(res.valid){
+                    alert = document.getElementById('alert-cadastro-good');
+
+                }
+                else{
+                    alert = document.getElementById('alert-cadastro-failure');
+                    document.getElementById('erroCadastro').innerHTML = ` ${res.reason}.`;
+                }
+                break;
+            case 'incorrect-pwd':
+                alert = document.getElementById('alert-incorrect-pwd');
+                break;
+            case 'remover-cadastro-success':
+                alert = document.getElementById('remover-cadastro-success');
+                break; 
+            case 'alterar-cadastro':
+                if(res.valid){
+                    alert = document.getElementById('alterar-cadastro-success');
+
+                }
+                else{
+                    alert = document.getElementById('alterar-cadastro-failure');
+                    document.getElementById('erroEditarCadastro').innerHTML = ` ${res.reason}.`;
+                }
+                break;
+            case 'criar-keyword':
+                if(res.valid){
+                    alert = document.getElementById('criar-keyword-success');
+
+                }
+                else{
+                    alert = document.getElementById('criar-keyword-failure');
+                }
+                break;
+            case 'alterar-keyword':
+                if(res.valid){
+                    alert = document.getElementById('alterar-keyword-success');
+
+                }
+                else{
+                    alert = document.getElementById('alterar-keyword-failure');
+                }
+                break;
+            case 'remover-keyword':
+                if(res.valid){
+                    alert = document.getElementById('remover-keyword-success');
+
+                }
+                else{
+                    alert = document.getElementById('remover-keyword-failure');
+                }
+                break;
+            case 'criar-ac':
+                if(res.valid){
+                    alert = document.getElementById('criar-ac-success');
+
+                }
+                else{
+                    alert = document.getElementById('criar-ac-failure');
+                }
+                break;
+            case 'alterar-ac':
+                if(res.valid){
+                    alert = document.getElementById('alterar-ac-success');
+
+                }
+                else{
+                    alert = document.getElementById('alterar-ac-failure');
+                }
+                break;
+            case 'remover-ac':
+                if(res.valid){
+                    alert = document.getElementById('remover-ac-success');
+
+                }
+                else{
+                    alert = document.getElementById('remover-ac-failure');
+                }
+                break;
+            default:
+                return;    
+        }
+
+        alert.style.display='block';
+    }
 
     render() {
         return (
@@ -92,18 +185,14 @@ export default class App extends Component {
                     <NavBar userData = {this.state} userLoggedChange={this.userLoggedChange}/>
                     </header>
 
-                    <div id="alert-failure" style={alertStyle} className="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Não deu!</strong> Usuário ou Senha Incorretos ou Usuário não Cadastrado.
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    
+                    <Alerts />
 
                     <Switch>
                     <Route exact path="/" render={ ()=>(<MainPage userData={this.state} history={history}/>)} />
-                    <Route exact path="/cadastro" render={()=>(<CadastroPage />)} />
+                    <Route exact path="/cadastro" render={()=>(<CadastroPage displayAlert = {this.displayAlert} />)} />
                     <Route exact path="/404" component={NotFoundPage} />
-                    <Route path={`/user=`} render={ ()=> (<ProtectedRoute component = {<UserPage userData={this.state}/>} userData={this.state}/>) } />
+                    <Route path={`/user=`} render={ ()=> (<ProtectedRoute component = {<UserPage userLoggedChange={this.userLoggedChange} displayAlert={this.displayAlert} userData={this.state}/>} userData={this.state} />) } />
                     <Redirect to="/404" />
                     </Switch>
                 </Router>

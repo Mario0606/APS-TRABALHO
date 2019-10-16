@@ -18,7 +18,8 @@ const linhaStyle = {
     width:'100%',
     justifyContent: 'center',
     borderBottom: '0.1em solid #D5E1A3',
-    boxShadow: '0 2px 3px rgba(0, 0, 0, 0.1)'
+    boxShadow: '0 2px 3px rgba(0, 0, 0, 0.1)',
+    zIndex: '10'
 };
 
 class NavBar extends Component {

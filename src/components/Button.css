@@ -1,0 +1,27 @@
+button.green-btn {
+    cursor: pointer;
+    color:white;
+    margin: 1%;
+    border-radius: 0.5rem;
+    background-color: #61E294;
+    border:1px solid #ced4da;
+    transition: 500ms;
+}
+
+button.red-btn{
+    cursor: pointer;
+    color:white;
+    margin: 1%;
+    border-radius: 0.5rem;
+    background-color: rgb(221, 66, 27);
+    border:1px solid #ced4da;
+    transition: 500ms;
+}
+
+button.green-btn:hover{
+    background-color: rgb(86, 202, 132);
+}
+
+button.red-btn:hover{
+    background-color: rgb(192, 55, 21);
+}

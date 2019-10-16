@@ -3,11 +3,6 @@ import DinamicFormField from '../components/DinamicFormField.js'
 import axios from 'axios';
 import './CadastroPage.css'
 
-const alertStyle = {
-    display: 'none'
-};
-
-
 const formGroupStyle = {
     display: 'flex',
     flexFlow: 'column nowrap',
@@ -196,27 +191,45 @@ export default class CadastroPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:8000/create/`, this.state.form)
-         .then((response)=>{
-                const httpRes = response;
-                this.setState((prevState)=>(
-                        {
-                            form:{
-                                ...prevState.form,
-                            },
-                            res:{
-                                ...prevState.res,
-                                valid:httpRes.data.valid,
-                                reason:httpRes.data.reason
-                            }
-                        }
-                    ),
-                    () =>{
-                        let alert=document.getElementById(this.state.res.valid?'alert-good':'alert-failure');
-                        alert.style.display='block';
-                    }
-                );
-        })
+        // axios.post(`http://localhost:8000/create/`, this.state.form)
+        //  .then((response)=>{
+        //         const httpRes = response;
+        //         this.setState((prevState)=>(
+        //                 {
+        //                     form:{
+        //                         ...prevState.form,
+        //                     },
+        //                     res:{
+        //                         ...prevState.res,
+        //                         valid:httpRes.data.valid,
+        //                         reason:httpRes.data.reason
+        //                     }
+        //                 }
+        //             ),
+        //             () =>{
+        //                 this.props.diplayAlert('cadastro', this.state.res);
+        //             }
+        //         );
+        // })
+        
+
+
+        this.setState((prevState)=>(
+            {
+                form:{
+                    ...prevState.form,
+                },
+                res:{
+                    ...prevState.res,
+                    valid:false,
+                    reason:'Deu ruim'
+                }
+            }
+        ),
+        () =>{
+            this.props.displayAlert('cadastro', this.state.res);
+        }
+    );
         
     }
 
@@ -224,27 +237,7 @@ export default class CadastroPage extends Component {
         return (
              <React.Fragment>
 
-
-
-                <div id="alert-good" style={alertStyle} className="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Sucesso!</strong> O Cadastro foi Realizado!
-                    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div id="alert-failure" style={alertStyle} className="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Não deu!</strong> {this.state.res.reason}.
-                    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-
-
-
-
-                <form onSubmit={this.handleSubmit} id = "mainForm" style={{margin:'1%'}}>
+                <form onSubmit={this.handleSubmit} id = "mainForm" style={{margin:'auto', marginTop:'2%' , width:'75%'}}>
                     <div style={formGroupStyle} className="form-group">
                         <label >Nome</label>
                         <input onChange={this.handleChangeName} type="text" className="form-control" id="inputName" placeholder="Nome"/>
@@ -311,7 +304,7 @@ export default class CadastroPage extends Component {
                     <div className="form-row">
                         <DinamicFormField funcao = {this.state.form.type} handleChangeMatricule={this.handleChangeMatricule} handleChangeTittle={this.handleChangeTittle} handleChangeSearchArea={this.handleChangeSearchArea}></DinamicFormField>
                     </div>
-                    <button type="submit" className="btn btn-primary">Concluir Cadastro</button>
+                    <button type="submit" style={{transition:'500ms'}} className="btn btn-primary">Concluir Cadastro</button>
                 </form>
             </React.Fragment>
         )

@@ -6,7 +6,7 @@ export default class NotFoundPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <img src={erroImg} style={{margin:'3% 0'}} alt="ArticleSearch" width="30%" />
+                <img src={erroImg} style={{margin:'5% 0', width:'30em'}} alt="ArticleSearch" width="400em" />
             </React.Fragment>
         )
     }
