@@ -12,7 +12,7 @@ class ConcentrationArea(models.Model):
         db_table = 'concentration_areas'
 
     def save(self, *args, **kwargs):
-        self.concentration_area = self.concentration_area.lower()
+        self.area = self.area.lower()
         return super(ConcentrationArea, self).save(*args, **kwargs)
 
 class Keyword(models.Model):

@@ -9,7 +9,7 @@ class EventViewSet(ModelViewSet):
     """"""
     queryset = Events.objects.all()
     serializer_class = EventSerializer
-    filter_fields = ('sigla', 'reviews', 'keywords', 'start_date',)
+    filter_fields = ('sigla', 'reviews', 'keywords__keyword', 'start_date', 'concentration_area__area',)
 
     # def get_queryset(self):
     #     keyword = self.request.query_params.get("keywords", None)
