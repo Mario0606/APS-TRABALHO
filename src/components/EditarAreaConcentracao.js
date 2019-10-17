@@ -29,11 +29,11 @@ export default class EditarAreaConcentracao extends Component {
     }
 
     handleClick = ()=>{
-        // axios.post(`http://localhost:8000/create/`, this.state.keyword)
-        //  .then( (response) => {
-        //     this.props.displayAlert('alterar-keyword', response);
-        //  });
-        this.props.displayAlert('alterar-ac', {valid:false});
+        axios.post(`http://localhost:8000/api/concentration_area/`, {area: this.state.areaConcentracao})
+         .then((response)=>{
+                this.props.displayAlert('editar-ac', response.data);
+        })
+
     }
 
     handleChangeAreaConcentracao=(e)=>{

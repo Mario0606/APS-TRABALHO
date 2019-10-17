@@ -20,12 +20,12 @@ export default class CriarAreaConcentracao extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // axios.post(`http://localhost:8000/create/`, this.state)
-        //  .then((response)=>{
-        //         this.props.diplayAlert('editar-cadastro', response);
-        // })
+        axios.post(`http://localhost:8000/api/concentration_area/`, {area: this.state.areaConcentracao})
+         .then((response)=>{
+                this.props.displayAlert('criar-ac', response.data);
+        })
 
-        this.props.displayAlert('criar-ac', {valid:false});
+        // this.props.displayAlert('criar-ac', {valid:false});
     }
 
     render() {

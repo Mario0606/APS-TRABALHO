@@ -108,13 +108,33 @@ export default class EditarCadastroForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // axios.post(`http://localhost:8000/create/`, this.state)
-        //  .then((response)=>{
-        //         this.props.diplayAlert('editar-cadastro', response);
-        // })
+        let type = this.props.userData.type === 'prof'? 'professor': 'student';
+        let formData = {
+            email:this.state.email,
+            password:this.state.password,
+            institution:this.state.institution,
+            address:this.state.address            
+        };
 
-        console.log(this.state);
-        this.props.displayAlert('alterar-cadastro', {valid: true, reason:'deu ruim ai'});
+        if(type===`professor`){
+            formData={
+                ...formData,
+                tittle:this.state.tittle,
+                search_area:this.state.search_area
+            }
+        }else{
+            formData={
+                ...formData,
+                matricule:this.state.matricule
+            }
+        }
+        axios.patch(`http://localhost:8000/api/${type}/`, formData)
+         .then((response)=>{
+            this.props.displayAlert('alterar-cadastro', response.data);
+        })
+        
+        // console.log(this.state);
+        // this.props.displayAlert('alterar-cadastro', {valid: true, reason:'deu ruim ai'});
     }
 
 

@@ -21,12 +21,12 @@ export default class CriarKeyword extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // axios.post(`http://localhost:8000/create/`, this.state)
-        //  .then((response)=>{
-        //         this.props.diplayAlert('editar-cadastro', response);
-        // })
+        axios.post(`http://localhost:8000/api/keyword/`, {keyword:this.state.keyword})
+         .then((response)=>{
+            this.props.displayAlert('criar-keyword', response.data);
+        })
 
-        this.props.displayAlert('criar-keyword', {valid:true})
+        // this.props.displayAlert('criar-keyword', {valid:true})
     }
     
     render() {

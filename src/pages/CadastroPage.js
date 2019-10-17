@@ -191,45 +191,66 @@ export default class CadastroPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // axios.post(`http://localhost:8000/create/`, this.state.form)
-        //  .then((response)=>{
-        //         const httpRes = response;
-        //         this.setState((prevState)=>(
-        //                 {
-        //                     form:{
-        //                         ...prevState.form,
-        //                     },
-        //                     res:{
-        //                         ...prevState.res,
-        //                         valid:httpRes.data.valid,
-        //                         reason:httpRes.data.reason
-        //                     }
-        //                 }
-        //             ),
-        //             () =>{
-        //                 this.props.diplayAlert('cadastro', this.state.res);
-        //             }
-        //         );
-        // })
+        let type = this.state.form.type ===`professor`?`professor`:`student`;
+        let formData = {
+            name:this.state.form.name,
+            email:this.state.form.email,
+            password:this.state.form.password,
+            institution:this.state.form.institution,
+            address:this.state.form.address            
+        };
+
+        if(type===`professor`){
+            formData={
+                ...formData,
+                tittle:this.state.form.tittle,
+                search_area:this.state.form.search_area
+            }
+        }else{
+            formData={
+                ...formData,
+                matricule:this.state.form.matricule
+            }
+        }
+        axios.post(`http://localhost:8000/api/${type}/`, formData)
+         .then((response)=>{
+                const httpRes = response;
+                this.setState((prevState)=>(
+                        {
+                            form:{
+                                ...prevState.form,
+                            },
+                            res:{
+                                ...prevState.res,
+                                valid:httpRes.data.valid,
+                                reason:httpRes.data.reason
+                            }
+                        }
+                    ),
+                    () =>{
+                        this.props.displayAlert('cadastro', this.state.res);
+                    }
+                );
+        })
         
 
 
-        this.setState((prevState)=>(
-            {
-                form:{
-                    ...prevState.form,
-                },
-                res:{
-                    ...prevState.res,
-                    valid:false,
-                    reason:'Deu ruim'
-                }
-            }
-        ),
-        () =>{
-            this.props.displayAlert('cadastro', this.state.res);
-        }
-    );
+        // this.setState((prevState)=>(
+        //     {
+        //         form:{
+        //             ...prevState.form,
+        //         },
+        //         res:{
+        //             ...prevState.res,
+        //             valid:false,
+        //             reason:'Deu ruim'
+        //         }
+        //     }
+        // ),
+        // () =>{
+        //     this.props.displayAlert('cadastro', this.state.res);
+        // }
+    //);
         
     }
 
@@ -299,7 +320,7 @@ export default class CadastroPage extends Component {
                                     Professor
                                 </label>
                             </div>
-                        </div>
+                        </div>xios
                     </div>
                     <div className="form-row">
                         <DinamicFormField funcao = {this.state.form.type} handleChangeMatricule={this.handleChangeMatricule} handleChangeTittle={this.handleChangeTittle} handleChangeSearchArea={this.handleChangeSearchArea}></DinamicFormField>

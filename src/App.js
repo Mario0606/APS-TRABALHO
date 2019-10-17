@@ -42,6 +42,7 @@ export default class App extends Component {
         let loginState = sessionStorage.getItem('loginState');
         if(loginState === null){
             loginState = {
+                userId:null,
                 userLogged: false,
                 email: null,
                 userType: null
@@ -55,29 +56,27 @@ export default class App extends Component {
 
     userLoggedChange = (formData, logout) => {
         
-        // axios.post(`http://localhost:8000/login/auth/`, formData)
-        //  .then((res)=>{
-        //      console.log(res)
-        //     this.setState( { userLogged:res.data.auth, email:res.data.auth?formData.email:null, userType:res.data.auth?res.data.type:null} , ()=>{
-        //         sessionStorage.setItem('loginState', JSON.stringify(this.state));
-        //         history.push(this.state.userLogged? '/user=':'/');
-        //         if(!this.state.userLogged){
-        //             let alert=document.getElementById('alert-failure');
-        //             alert.style.display='block';
-        //         }
-        //     });
-        //  })
-        let log = !this.state.userLogged;
+        axios.post(`http://localhost:8000/user/login/`, formData)
+         .then((res)=>{
+            this.setState( { userId:res.data.auth? res.data.id:null, userLogged:res.data.auth, email:res.data.auth?formData.email:null, userType:res.data.auth?res.data.type:null} , ()=>{
+                sessionStorage.setItem('loginState', JSON.stringify(this.state));
+                history.push(this.state.userLogged? '/user=':'/');
+                if(!this.state.userLogged && !logout){
+                    this.displayAlert('login-failure');
+                }
+            });
+         })
+        // let log = !this.state.userLogged;
         
-         this.setState( { userLogged:log, email:log?formData.email:null, userType:log?'adm':null} , ()=>{
-            sessionStorage.setItem('loginState', JSON.stringify(this.state));
+        //  this.setState( { userLogged:log, email:log?formData.email:null, userType:log?'adm':null} , ()=>{
+        //     sessionStorage.setItem('loginState', JSON.stringify(this.state));
 
-            history.push(this.state.userLogged? `/user=`:'/');
-            if(!logout && !this.state.userLogged){
-                this.displayAlert('login-failure');
-            }
+        //     history.push(this.state.userLogged? `/user=`:'/');
+        //     if(!logout && !this.state.userLogged){
+        //         this.displayAlert('login-failure');
+        //     }
             
-        });
+        // });
          
     }
 

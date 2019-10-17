@@ -18,19 +18,22 @@ export default class DeletarCadastro extends Component {
     }
 
     handleClick=()=>{
-        // axios.post(`http://localhost:8000/login/auth/`, {email:this.props.userData.email, password: this.state.pwd})
-        //  .then((res)=>{
-        //      if(res.data.auth){
+        let formData={email:this.props.userData.email, password: this.state.pwd};
+         axios.post(`http://localhost:8000/user/login/`, formData)
+         .then((res)=>{
+            this.setState( { userId:res.data.auth? res.data.id:null, userLogged:res.data.auth, email:res.data.auth?formData.email:null, userType:res.data.auth?res.data.type:null} , ()=>{
+                if(res.data.auth){
 
-        //         //AXIOS PARA REMOVER CADASTRO AQUI
-
-        //         this.props.userLoggedChange(null, true); //logout
-             
-        //     }
-        //      else{
-        //          this.props.displayAlert('incorrect-pwd');
-        //      }
-        //  })
+                    axios.delete(`http://localhost:8000/api/user/${this.props.userData.userId}/`)
+                     .then(()=>this.props.userLoggedChange(null, true));
+                    
+                 
+                }
+                 else{
+                     this.props.displayAlert('incorrect-pwd');
+                 }
+            });
+         })
 
         this.props.userLoggedChange(null, true); //logout
         this.props.displayAlert('remover-cadastro-success');

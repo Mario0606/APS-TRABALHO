@@ -28,11 +28,10 @@ export default class EditarKeyword extends Component {
     }
 
     handleClick = ()=>{
-        // axios.post(`http://localhost:8000/create/`, this.state.keyword)
-        //  .then( (response) => {
-        //     this.props.displayAlert('alterar-keyword', response);
-        //  });
-        this.props.displayAlert('alterar-keyword', {valid:false});
+        axios.post(`http://localhost:8000/api/keyword/`, {keyword:this.state.keyword})
+         .then((response)=>{
+            this.props.displayAlert('alterar-keyword', response.data);
+        })
     }
 
     handleChangeKeyword= (e)=>{
