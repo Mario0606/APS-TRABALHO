@@ -97,7 +97,9 @@ DATABASES = {
         'PORT': '',  # 8000 is default
     }
 }
-
+ALLOWED_HOSTS = [
+    'localhost', '127.0.0.1', '0.0.0.0'
+]
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 

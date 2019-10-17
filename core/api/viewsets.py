@@ -59,13 +59,14 @@ class LoginViewSet(ModelViewSet):
     @action(methods=['post'], detail=False)
     def login(self, request, pk=None):
         data = request.data
-        auth = User.objects.filter(email=data['address'], password=data['password'])
+        auth = User.objects.filter(email=data['email'], password=data['password'])
         res = {
             "valid": False,
             "reason": "Usuário não existe"
         }
         if auth:
             res = {
+                'user_id': auth[0].id,
                 'type': auth[0].type,
                 'valid': True
             }
