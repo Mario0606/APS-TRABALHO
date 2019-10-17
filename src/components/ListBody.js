@@ -36,17 +36,24 @@ export default class ListBody extends Component {
                 this.setState(
                     {
                         items:aux.slice(), 
-                        component: aux.map((item)=>{
-                            return(
-                                <tr className={this.props.selectable?"selectable":''} key={uuid.v4()} onClick={this.props.selectable?this.props.handleClick.bind(this, item): null}>
-                                    {Object.keys(item).map((key)=>( <td key={uuid.v4()}>{ item[key]? item[key] : '-' }</td> ))}
-                                </tr>
-                            );
-                        })
+                        component:aux.map((item)=>(
+                            <tr className={this.props.selectable?"selectable":''} key={uuid.v4()}>
+                            <td key={uuid.v4()}>{item.name}</td>
+                            <td key={uuid.v4()}>{ item.start_date }</td>
+                            <td key={uuid.v4()}>{ item.end_date }</td>
+                            <td key={uuid.v4()}>{ item.start_submit }</td>
+                            <td key={uuid.v4()}>{ item.deadline }</td>
+                            <td key={uuid.v4()}>{ item.concentration_area.area }</td>
+                            <td key={uuid.v4()}>{ item.keywords.map((item)=>(item.keyword)).toString()}</td>
+                            <td key={uuid.v4()}>{ item.reviews.map((item)=>(item.name)).toString()}</td>
+                            <td key={uuid.v4()}>{item.status}</td>
+                        </tr>
+                        ))
+
                     }
                 )
             })
-                
+
             break;
             case "keyword":
             case "area-concentracao":
