@@ -165,7 +165,7 @@ export default class CriarEvento extends Component {
                             <input id="sigla" onChange={this.handleChangeSigla} type="text" className="form-control" placeholder="Sigla"/>
                         </div>
                     </div>
-                    <div>
+                    <div className="form-row">
                         <div style={formGroupStyle} className="form-group col-md-6">
                                 <label >Data de Inicio</label>
                                 <input id="data-inicio" onChange={this.handleChangeDataRealizacao} type="date" className="form-control" />

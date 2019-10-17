@@ -309,18 +309,18 @@ export default class CadastroPage extends Component {
                         <div style={formCheckStyle} className="form-group">
                             <label style={{dislay:'inline-block', margin:'0 0 0 0.5rem'}}>Selecione sua função: </label>
                             <div style={{margin:'0 0.5rem'}} className="form-check">
-                                <input className="form-check-input" type="radio" name="funcao"  value="aluno" onClick={this.handleChangeType}/>
+                                <input className="form-check-input" type="radio" name="funcao"  value="Student" onClick={this.handleChangeType}/>
                                 <label className="form-check-label">
                                     Aluno
                                 </label>
                             </div>
                             <div style={{margin:'0 0.5rem 0 0'}} className="form-check">
-                                <input className="form-check-input" type="radio" name="funcao"  value="professor" onClick={this.handleChangeType}/>
+                                <input className="form-check-input" type="radio" name="funcao"  value="Professor" onClick={this.handleChangeType}/>
                                 <label className="form-check-label">
                                     Professor
                                 </label>
                             </div>
-                        </div>xios
+                        </div>
                     </div>
                     <div className="form-row">
                         <DinamicFormField funcao = {this.state.form.type} handleChangeMatricule={this.handleChangeMatricule} handleChangeTittle={this.handleChangeTittle} handleChangeSearchArea={this.handleChangeSearchArea}></DinamicFormField>
