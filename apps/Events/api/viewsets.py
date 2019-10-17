@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from apps.Events.models import Events, ConcentrationArea, Keyword
+from apps.Professor.models import Professor
 from .serializers import EventSerializer, PostEventSerializer
 from rest_framework.response import Response
 from django.core import serializers
@@ -46,12 +47,19 @@ class CreateEventViewSet(ModelViewSet):
     
     def create(self, request, *args, **kwargs):
         keyword_objs = []
+        reviewers_obj = []
         try:
             if 'keywords' in request.data:
                 for k_id in request.data['keywords']:
                     kw = Keyword.objects.get(keyword_id=k_id)
                     keyword_objs.append(kw)
                 del request.data['keywords']
+
+            if 'reviewers' in request.data:
+                for r_id in request.data['reviewers']:
+                    kw = Professor.objects.get(id=r_id)
+                    reviewers_obj.append(kw)
+                del request.data['reviewers']
 
             concentration_area_obj = ConcentrationArea.objects.get(concentration_area_id=request.data['concentration_area'])
             request.data['concentration_area'] = concentration_area_obj
@@ -68,6 +76,7 @@ class CreateEventViewSet(ModelViewSet):
         except Events.DoesNotExist:
             new_event = Events.objects.create(**request.data)
             new_event.keywords.add(*keyword_objs)
+            new_event.reviews.add(*reviewers_obj)
 
         return Response({'valid': True, 'text': 'Event Criado com sucesso'})
 
