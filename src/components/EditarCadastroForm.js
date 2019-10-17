@@ -108,7 +108,7 @@ export default class EditarCadastroForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        let type = this.props.userData.type === 'prof'? 'professor': 'student';
+        let type = this.props.userData.userType === 'Professor'? 'professor': 'student';
         let formData = {
             email:this.state.email,
             password:this.state.password,
@@ -128,7 +128,8 @@ export default class EditarCadastroForm extends Component {
                 matricule:this.state.matricule
             }
         }
-        axios.patch(`http://localhost:8000/api/${type}/`, formData)
+        console.log(formData)
+        axios.patch(`http://localhost:8000/api/${type}/${this.props.userData.userId}/`, formData)
          .then((response)=>{
             this.props.displayAlert('alterar-cadastro', response.data);
         })

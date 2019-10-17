@@ -55,29 +55,37 @@ export default class App extends Component {
     }
 
     userLoggedChange = (formData, logout) => {
-        
-        axios.post(`http://localhost:8000/user/login/`, formData)
-         .then((res)=>{
-            this.setState( { userId:res.data.auth? res.data.id:null, userLogged:res.data.auth, email:res.data.auth?formData.email:null, userType:res.data.auth?res.data.type:null} , ()=>{
+        if(logout){
+            this.setState( { userId:null, userLogged:false, email:null, userType:null} , ()=>{
                 sessionStorage.setItem('loginState', JSON.stringify(this.state));
                 history.push(this.state.userLogged? '/user=':'/');
-                if(!this.state.userLogged && !logout){
-                    this.displayAlert('login-failure');
-                }
+
             });
-         })
+        }
+        else{
+            axios.post(`http://localhost:8000/api/user/login/`, formData)
+            .then((res)=>{
+                this.setState( { userId:res.data.auth? res.data.id:null, userLogged:res.data.auth, email:res.data.auth?formData.email:null, userType:res.data.auth?res.data.type:null} , ()=>{
+                    sessionStorage.setItem('loginState', JSON.stringify(this.state));
+                    history.push(this.state.userLogged? '/user=':'/');
+                    if(!this.state.userLogged && !logout){
+                        this.displayAlert('login-failure');
+                    }
+                });
+            })
+        }
         // let log = !this.state.userLogged;
-        
+
         //  this.setState( { userLogged:log, email:log?formData.email:null, userType:log?'adm':null} , ()=>{
         //     sessionStorage.setItem('loginState', JSON.stringify(this.state));
 
-        //     history.push(this.state.userLogged? `/user=`:'/');
+        //     history.push(this.state.userLogged? /user=:'/');
         //     if(!logout && !this.state.userLogged){
         //         this.displayAlert('login-failure');
         //     }
-            
+
         // });
-         
+
     }
 
 

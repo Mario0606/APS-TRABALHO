@@ -11,7 +11,7 @@ export default class DinamicFormField extends Component {
 
     render() {
         
-        if(this.props.funcao === 'aluno'){
+        if(this.props.funcao === 'Student'){
             return (
                 <React.Fragment>
                     <div style={formGroupStyle} className="form-group col-md-auto">
@@ -21,7 +21,7 @@ export default class DinamicFormField extends Component {
                 </React.Fragment>
             )
         }
-        else if(this.props.funcao === 'professor'){
+        else if(this.props.funcao === 'Professor'){
             return(
                 <React.Fragment>
                     <div style={formGroupStyle} className="form-group col-md-auto">

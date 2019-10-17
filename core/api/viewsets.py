@@ -59,16 +59,19 @@ class LoginViewSet(ModelViewSet):
     @action(methods=['post'], detail=False)
     def login(self, request, pk=None):
         data = request.data
+        print(data)
         auth = User.objects.filter(email=data['email'], password=data['password'])
+        print(auth[0])
         res = {
             "valid": False,
             "reason": "Usuário não existe"
         }
         if auth:
             res = {
-                'user_id': auth[0].id,
+                'id': auth[0].id,
                 'type': auth[0].type,
-                'valid': True
+                'auth': True
             }
+            print(res)
             return Response(res)
         return Response(res)
