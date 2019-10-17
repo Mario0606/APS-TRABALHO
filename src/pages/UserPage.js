@@ -88,6 +88,7 @@ export default class UserPage extends Component {
             case 'submeter-artigo':
                 component = <SubmeterArtigo displayAlert={this.props.displayAlert}/>
                 break;
+                
             default:
                  component = '';
          }

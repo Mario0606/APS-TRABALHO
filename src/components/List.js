@@ -35,7 +35,8 @@ export default class List extends Component {
                 dinamicHeader = <thead>
                                     <tr>
                                         <th scope="col">Nome</th>
-                                        <th scope="col">Data</th>
+                                        <th scope="col">Data de Início</th>
+                                        <th scope="col">Data de Fim</th>
                                         <th scope="col">Início da Submissão</th>
                                         <th scope="col">Fim da Submissão</th>
                                         <th scope="col">Área de Concentração</th>

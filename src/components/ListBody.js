@@ -29,6 +29,25 @@ export default class ListBody extends Component {
             })
                 
             break;
+            case "all-events":
+            axios.get(`http://localhost:8000/api/events/`)
+             .then((response)=>{ 
+                aux = response.data;
+                this.setState(
+                    {
+                        items:aux.slice(), 
+                        component: aux.map((item)=>{
+                            return(
+                                <tr className={this.props.selectable?"selectable":''} key={uuid.v4()} onClick={this.props.selectable?this.props.handleClick.bind(this, item): null}>
+                                    {Object.keys(item).map((key)=>( <td key={uuid.v4()}>{ item[key]? item[key] : '-' }</td> ))}
+                                </tr>
+                            );
+                        })
+                    }
+                )
+            })
+                
+            break;
             case "keyword":
             case "area-concentracao":
             case "evento":
