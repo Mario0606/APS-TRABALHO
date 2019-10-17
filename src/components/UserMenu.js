@@ -7,7 +7,7 @@ export default class UserMenu extends Component {
     }
 
     loadAdmOptions=()=>{
-        if(this.props.userData.userType ==='adm'){
+        if(this.props.userData.userType ==='Administrator'){
             return(
                 <React.Fragment>
                     {/* TÍTULO */}
@@ -136,7 +136,7 @@ export default class UserMenu extends Component {
     }
 
     loadAdmEvent=()=>{
-        if(this.props.userData.userType==='adm'){
+        if(this.props.userData.userType==='Administrator'){
             return(
                 <React.Fragment>
                     <div className="card">
@@ -174,7 +174,7 @@ export default class UserMenu extends Component {
     }
 
     loadProfessorArticle=()=>{
-        if(this.props.userData.userType==='prof'){
+        if(this.props.userData.userType==='Professor'){
             return(
                 <React.Fragment>
                     <div className="card">

@@ -36,11 +36,8 @@ export default class RemoverKeyword extends Component {
 
             () => {
                 if(e.target.id === "yesBtn"){
-                    // axios.delete(`http://localhost:8000/create/`, { keyword: this.state.keyword })
-                    //  .then((response) => {
-                    //      this.displayAlert("remover-keyword", response);
-                    //  });
-                    this.props.displayAlert("remover-keyword", {valid: true});
+                    axios.delete(`http://localhost:8000/api/user/${this.props.userData.userId}/`)
+                     .then((response)=>this.props.displayAlert("remover-keyword", response.data));
                 }
             }
             

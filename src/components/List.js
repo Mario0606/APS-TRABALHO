@@ -16,9 +16,8 @@ export default class List extends Component {
             case "keyword":
                 dinamicHeader = <thead>
                                     <tr>
+                                        <th scope="col">Id</th>
                                         <th scope="col">Palavra-Chave</th>
-                                        <th scope="col">Data de Criação</th>
-                                        <th scope="col">Última Alteração</th>
                                     </tr>
                                 </thead>;
                 break;
@@ -26,9 +25,8 @@ export default class List extends Component {
             case "area-concentracao":
                 dinamicHeader = <thead>
                                     <tr>
+                                        <th scope="col">Id</th>
                                         <th scope="col">Área de Concentração</th>
-                                        <th scope="col">Data de Criação</th>
-                                        <th scope="col">Última Alteração</th>
                                     </tr>
                                 </thead>;
                 break;
