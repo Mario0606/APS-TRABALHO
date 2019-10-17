@@ -36,7 +36,7 @@ export default class RemoverKeyword extends Component {
 
             () => {
                 if(e.target.id === "yesBtn"){
-                    axios.delete(`http://localhost:8000/api/user/${this.props.userData.userId}/`)
+                    axios.delete(`http://localhost:8000/api/keyword/${this.state.keyword.keyword_id}/`)
                      .then((response)=>this.props.displayAlert("remover-keyword", response.data));
                 }
             }
@@ -47,6 +47,7 @@ export default class RemoverKeyword extends Component {
     handleListClick(keywordData){
         this.setState(
             {
+                keyword:keywordData,
                 component:  <React.Fragment>
                                 <List selectable={false} listOf="keyword" element={keywordData}/>
                                 <p>Deseja Remover a Palavra-Chave?</p>

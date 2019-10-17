@@ -36,20 +36,18 @@ export default class RemoverAreaConcentracao extends Component {
 
             () => {
                 if(e.target.id === "yesBtn"){
-                    // axios.delete(`http://localhost:8000/create/`, { areaConcentracao: this.state.areaConcentracao })
-                    //  .then((response) => {
-                    //      this.displayAlert("remover-ac", response);
-                    //  });
-                    this.props.displayAlert("remover-ac", {valid: true});
+                    axios.delete(`http://localhost:8000/api/concentration_area/${this.state.areaConcentracao.concentration_area_id}/`)
+                    .then((response)=>this.props.displayAlert("remover-ac", response.data));
                 }
             }
-            
+
         );
     }
 
     handleListClick(areaConcentracaoData){
         this.setState(
             {
+                areaConcentracao: areaConcentracaoData,
                 component:  <React.Fragment>
                                 <List selectable={false} listOf="area-concentracao" element={areaConcentracaoData}/>
                                 <p>Deseja Remover a Área de Concentração?</p>
@@ -59,7 +57,7 @@ export default class RemoverAreaConcentracao extends Component {
                                 </div>
                             </React.Fragment>
             }
-            
+
         );
     }
 
