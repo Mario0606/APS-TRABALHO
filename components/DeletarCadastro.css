@@ -1,0 +1,12 @@
+
+form#pwd-deletar-cadastro input, form#pwd-deletar-cadastro select{
+    border: 1px solid lightskyblue;
+}
+
+form#pwd-deletar-cadastro input:hover, form#pwd-deletar-cadastro select:hover{
+    border: 1px solid #1958BD;
+}
+
+form#pwd-deletar-cadastro input:focus, form#pwd-deletar-cadastro select:focus{
+    border: 1px solid #1958BD;
+}
